@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Espiral | Studio de Cachos e Crespos</title>
+<meta name="description" content="Espiral Studio de Cachos e Crespos: corte para cacheadas, definição, hidratação, cronograma capilar e transição capilar. Agende pelo WhatsApp.">
+<meta property="og:title" content="Espiral · Studio de Cachos e Crespos">
+<meta property="og:description" content="Seu cacho, do seu jeito.">
+<meta name="theme-color" content="#fff6ef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%237a3e5c'/%3E%3Cpath d='M32 32c0-3 4-3 4 0 0 5-8 5-8 0 0-7 12-7 12 0 0 9-16 9-16 0 0-11 20-11 20 0' fill='none' stroke='%23f2c46a' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=DM+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Ameixa suave, rosa, mel e creme. Sem preto. */
+:root{
+  --cream:#fff6ef; --paper:#fffbf7; --blush:#fbe3e6; --blush2:#f5cdd5;
+  --plum:#7a3e5c; --plum2:#5f2f48; --plum3:#a8678a; --rose:#e9a7b8; --rose2:#d97f97;
+  --honey:#f2c46a; --honey2:#e0a53c; --mint:#d8eee3; --sage:#8fb8a2;
+  --ink:#4a2a3b; --mid:#87697a; --line:rgba(74,42,59,.13);
+  --serif:"Fraunces",Georgia,serif; --f:"DM Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.8,.2,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+html,body{margin:0}
+body{background:var(--cream);color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.65}
+body.loading{overflow:hidden}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+::selection{background:var(--honey)}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right))}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1;margin:0;letter-spacing:-.025em;text-wrap:balance;color:var(--plum2);font-variation-settings:"SOFT" 100,"WONK" 1}
+h2{font-size:clamp(42px,5.8vw,80px)}
+h3{font-size:28px}
+p{margin:0}
+.it{font-style:italic;font-weight:400;color:var(--rose2)}
+.hn{font-style:italic;font-weight:400;color:var(--honey2)}
+.tag{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 10px;border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);font-size:13.5px;font-weight:600;color:var(--plum);width:max-content;max-width:100%}
+.tag svg{width:22px;height:22px;flex:none}
+.pad{padding-block:clamp(90px,11vw,150px)}
+
+/* ===== Abertura 0–100: o cacho se desenha ===== */
+.loader{position:fixed;inset:0;z-index:500;display:grid;place-items:center;background:var(--plum);color:var(--cream);transition:clip-path 1.1s var(--ease)}
+.loader.go{clip-path:inset(0 0 100% 0 round 0 0 50% 50%)}
+.ld{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.ld svg{width:min(210px,54vw);height:auto;overflow:visible}
+.ld .sp{fill:none;stroke:var(--honey);stroke-width:5;stroke-linecap:round}
+.ld .n{font-family:var(--serif);font-size:64px;line-height:1;font-variant-numeric:tabular-nums}
+.ld .n small{font-size:.45em;color:var(--rose)}
+.ld .nm{font-family:var(--serif);font-style:italic;font-size:30px;color:var(--blush)}
+.ld .sb{font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;opacity:.75;padding-left:.28em}
+
+/* ===== Topo ===== */
+.nav{position:fixed;inset:0 0 auto;z-index:60;padding-block:16px;transition:padding .4s,background .4s,box-shadow .4s}
+.nav.solid{padding-block:9px;background:rgba(255,246,239,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand .mk{width:48px;height:48px;border-radius:50%;background:var(--plum);display:grid;place-items:center;flex:none;transition:transform .8s var(--spring)}
+.brand:hover .mk{transform:rotate(360deg)}
+.brand .mk svg{width:30px;height:30px}
+.brand b{display:block;font-family:var(--serif);font-weight:500;font-size:27px;line-height:1;color:var(--plum2);font-style:italic}
+.brand small{display:block;font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-top:3px}
+.links{display:flex;gap:6px;font-size:15px;font-weight:500;padding:5px;border-radius:999px;background:rgba(255,251,247,.7);box-shadow:inset 0 0 0 1px var(--line)}
+.links a{text-decoration:none;padding:8px 14px;border-radius:999px;transition:background .3s,color .3s}
+.links a:hover{background:var(--plum);color:var(--cream)}
+@media(max-width:1060px){.links{display:none}}
+.btn{--x:0px;--y:0px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:17px 28px;border-radius:999px;border:0;cursor:pointer;font-weight:700;font-size:15.5px;text-decoration:none;white-space:nowrap;transform:translate(var(--x),var(--y));transition:transform .4s var(--ease),background .3s,color .3s,box-shadow .3s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn.p{background:var(--plum);color:var(--cream);box-shadow:0 16px 34px -16px rgba(95,47,72,.85)}
+.btn.p:hover{background:var(--plum2)}
+.btn.h{background:var(--honey);color:var(--plum2);box-shadow:0 16px 34px -16px rgba(224,165,60,.9)}
+.btn.h:hover{background:#f5cf80}
+.btn.o{background:transparent;color:var(--plum2);box-shadow:inset 0 0 0 2px var(--plum3)}
+.btn.o:hover{background:var(--plum2);color:var(--cream);box-shadow:inset 0 0 0 2px var(--plum2)}
+.btn .ar{transition:transform .4s var(--ease)}
+.btn:hover .ar{transform:translateX(5px)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,input[type=range]:focus-visible{outline:3px solid var(--honey2);outline-offset:3px}
+.nav .btn{padding:12px 20px;font-size:14.5px}
+@media(max-width:560px){.nav .btn span{display:none}.nav .btn{padding:12px}.brand small{display:none}}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding-block:130px 80px}
+#curls{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hgrid{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,80px);align-items:center}
+.htx{display:flex;flex-direction:column;gap:24px}
+.hero h1{font-size:clamp(56px,8.6vw,128px);line-height:.92}
+.hero h1 .ch{display:inline-block;opacity:0;transform:translateY(50%) rotate(12deg);transform-origin:bottom}
+.ready .hero h1 .ch{animation:bnc .9s var(--spring) forwards;animation-delay:calc(var(--i)*.035s + .15s)}
+@keyframes bnc{to{opacity:1;transform:none}}
+.hero .lead{max-width:46ch;color:var(--mid);font-size:clamp(17px,1.4vw,19.5px)}
+.fx{opacity:0;transform:translateY(22px)}
+.ready .fx{animation:fin 1s var(--ease) forwards;animation-delay:var(--d,.6s)}
+@keyframes fin{to{opacity:1;transform:none}}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pills span{padding:7px 14px;border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);font-size:14px;font-weight:500}
+/* ilustração da cliente */
+.art{position:relative;justify-self:center;width:min(460px,100%);aspect-ratio:1}
+.art .bg{position:absolute;inset:4%;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;background:radial-gradient(circle at 30% 30%,var(--blush),var(--blush2));animation:blob 12s ease-in-out infinite}
+@keyframes blob{50%{border-radius:56% 44% 44% 56%/44% 56% 44% 56%;transform:rotate(6deg)}}
+.art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.art .hair circle{transform-box:fill-box;transform-origin:center;animation:boing 3.6s ease-in-out infinite;animation-delay:calc(var(--d)*-1s)}
+@keyframes boing{50%{transform:scale(1.12) translate(0,-2px)}}
+.art .chip{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:999px;background:rgba(255,251,247,.94);backdrop-filter:blur(6px);box-shadow:0 20px 40px -20px rgba(74,42,59,.5);font-size:14px;font-weight:600;line-height:1.2;animation:float 6s ease-in-out infinite}
+.art .chip i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:var(--honey);flex:none}
+.art .chip small{display:block;font-weight:500;color:var(--mid);font-size:12px}
+.art .c1{left:-6%;top:16%}
+.art .c2{right:-6%;bottom:14%;animation-delay:-3s}
+.art .c2 i{background:var(--mint)}
+@keyframes float{50%{transform:translateY(-10px)}}
+@media(max-width:900px){.hgrid{grid-template-columns:1fr}.art{order:-1;width:min(300px,76vw)}.art .c1{left:-10%}.art .c2{right:-10%}.hero{padding-top:110px}}
+
+/* faixa ondulada */
+.wv{position:relative;height:120px;overflow:hidden}
+.wv svg{position:absolute;left:0;top:0;height:100%;width:200%;animation:wv 26s linear infinite}
+@keyframes wv{to{transform:translateX(-50%)}}
+
+/* ===== Curvatura ===== */
+.curv{background:var(--plum);color:var(--cream);border-radius:clamp(30px,5vw,64px);margin-inline:clamp(8px,1.4vw,18px)}
+.curv h2{color:var(--cream)}
+.curv .it{color:var(--rose)}
+.curv .tag{background:rgba(255,255,255,.1);color:var(--blush);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.cg .tx{display:flex;flex-direction:column;gap:20px}
+.cg .tx>p{opacity:.85}
+.strand{position:relative;border-radius:30px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);padding:20px;aspect-ratio:1/1.05;display:grid;place-items:center}
+.strand svg{width:100%;height:100%}
+.strand path{fill:none;stroke:var(--honey);stroke-width:7;stroke-linecap:round;transition:d .5s var(--ease)}
+.strand path.s2{stroke:var(--rose);stroke-width:5;opacity:.8}
+.strand path.s3{stroke:var(--blush);stroke-width:4;opacity:.5}
+.strand .big{position:absolute;left:24px;top:18px;font-family:var(--serif);font-size:clamp(60px,7vw,96px);line-height:1;color:var(--cream)}
+.strand .big small{display:block;font-family:var(--f);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);margin-top:4px}
+.types{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.types button{border:0;cursor:pointer;padding:12px 0;border-radius:12px;background:rgba(255,255,255,.08);color:var(--cream);font-weight:700;font-size:14px;transition:background .3s,color .3s,transform .4s var(--spring)}
+.types button:hover{background:rgba(255,255,255,.16)}
+.types button.on{background:var(--honey);color:var(--plum2);transform:translateY(-4px)}
+.cg input[type=range]{width:100%;accent-color:var(--honey);height:28px}
+.tinfo{border-radius:24px;background:var(--paper);color:var(--ink);padding:24px;display:flex;flex-direction:column;gap:10px}
+.tinfo h3{font-size:28px}
+.tinfo p{color:var(--mid);font-size:15.5px}
+.tinfo .tg{display:flex;flex-wrap:wrap;gap:6px}
+.tinfo .tg span{font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--blush)}
+@media(max-width:900px){.cg{grid-template-columns:1fr}.strand{max-width:420px;width:100%;justify-self:center}.types{grid-template-columns:repeat(5,1fr)}}
+
+/* ===== Serviços ===== */
+.sh{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:50px}
+.sh .l{display:flex;flex-direction:column;gap:18px;max-width:780px}
+.sh p{color:var(--mid);max-width:42ch}
+.svs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.sv{position:relative;padding:28px;border-radius:30px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);display:flex;flex-direction:column;gap:12px;overflow:hidden;isolation:isolate;transition:transform .6s var(--spring),box-shadow .4s}
+.sv:hover{transform:translateY(-8px) rotate(-.6deg);box-shadow:inset 0 0 0 1px var(--rose),0 40px 70px -40px rgba(122,62,92,.55)}
+.sv .ic{width:62px;height:62px;border-radius:20px;background:var(--c,var(--blush));display:grid;place-items:center;transition:transform .7s var(--spring)}
+.sv:hover .ic{transform:rotate(-14deg) scale(1.08)}
+.sv .ic svg{width:34px;height:34px}
+.sv p{color:var(--mid);font-size:15.5px}
+.sv .ft{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;border-top:1px dashed var(--line)}
+.sv .pr{font-size:13px;color:var(--mid)}
+.sv .pr b{display:block;font-family:var(--serif);font-weight:500;font-size:24px;color:var(--plum)}
+.sv .go{width:46px;height:46px;border-radius:50%;background:var(--plum);color:var(--cream);display:grid;place-items:center;text-decoration:none;transition:transform .5s var(--spring),background .3s}
+.sv .go:hover{transform:rotate(-45deg);background:var(--rose2)}
+.sv svg.sq{position:absolute;right:-30px;top:-30px;width:150px;height:150px;z-index:-1;opacity:.5;transition:transform 1.2s var(--ease)}
+.sv:hover svg.sq{transform:rotate(90deg) scale(1.1)}
+@media(max-width:980px){.svs{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.svs{grid-template-columns:1fr}}
+
+/* ===== Quiz ===== */
+.qz{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.qz .tx{display:flex;flex-direction:column;gap:18px}
+.qz .tx p{color:var(--mid)}
+.qcard{border-radius:32px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line),0 40px 80px -50px rgba(122,62,92,.5);padding:clamp(24px,3.4vw,40px);min-height:420px;display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden}
+.qbar{height:8px;border-radius:999px;background:var(--blush);overflow:hidden}
+.qbar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--rose2),var(--honey2));transition:width .6s var(--ease)}
+.qstep{display:flex;flex-direction:column;gap:16px;animation:qin .5s var(--ease)}
+@keyframes qin{from{opacity:0;transform:translateX(30px)}}
+.qstep small{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--rose2)}
+.qstep h3{font-size:clamp(26px,2.6vw,34px)}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qopts button{border:0;cursor:pointer;text-align:left;padding:16px 18px;border-radius:18px;background:var(--cream);box-shadow:inset 0 0 0 1px var(--line);font-size:15.5px;font-weight:500;display:flex;gap:12px;align-items:center;transition:background .3s,transform .4s var(--spring),box-shadow .3s}
+.qopts button:hover{background:var(--blush);transform:translateY(-3px);box-shadow:inset 0 0 0 1px var(--rose)}
+.qopts .e{font-size:24px}
+.qres{display:flex;flex-direction:column;gap:14px;animation:qin .5s var(--ease)}
+.qres .badge{align-self:flex-start;padding:8px 16px;border-radius:999px;background:var(--honey);font-weight:700;font-size:14px;color:var(--plum2)}
+.qres h3{font-size:clamp(32px,3.4vw,44px)}
+.qres p{color:var(--mid)}
+.qres .row{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:900px){.qz{grid-template-columns:1fr}}
+@media(max-width:480px){.qopts{grid-template-columns:1fr}}
+
+/* ===== Cronograma ===== */
+.cron{background:var(--blush);border-radius:clamp(30px,5vw,64px);margin-inline:clamp(8px,1.4vw,18px)}
+.cgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.wk{border-radius:26px;background:var(--paper);padding:22px;display:flex;flex-direction:column;gap:12px}
+.wk b{font-family:var(--serif);font-weight:500;font-size:24px;color:var(--plum2)}
+.wk .d{display:flex;flex-direction:column;gap:8px}
+.wk .d span{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font-size:14.5px;font-weight:600;transition:transform .4s var(--spring)}
+.wk .d span:hover{transform:scale(1.04)}
+.wk .d span::before{content:"";width:10px;height:10px;border-radius:50%;background:currentColor;flex:none}
+.H{background:#e3f1fb;color:#3f7aa3}
+.N{background:#fdf0d6;color:#b07a17}
+.R{background:#f6e0ea;color:#9a4a6f}
+.leg{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.leg span{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;font-weight:600;font-size:14.5px}
+.leg span::before{content:"";width:10px;height:10px;border-radius:50%;background:currentColor}
+.cron .note{font-size:13.5px;color:var(--mid);margin-top:16px}
+@media(max-width:900px){.cgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.cgrid{grid-template-columns:1fr}}
+
+/* ===== Transição ===== */
+.tr{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:start}
+.tr .tx{display:flex;flex-direction:column;gap:18px;position:sticky;top:110px}
+.tr .tx p{color:var(--mid)}
+.tl{position:relative;display:flex;flex-direction:column;gap:18px;padding-left:44px}
+.tl::before{content:"";position:absolute;left:15px;top:10px;bottom:10px;width:2px;background:var(--blush2)}
+.tl .fill{position:absolute;left:15px;top:10px;width:2px;height:var(--h,0%);background:linear-gradient(var(--rose2),var(--honey2));transition:height .2s linear}
+.st{position:relative;padding:24px;border-radius:24px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);display:flex;flex-direction:column;gap:8px}
+.st::before{content:"";position:absolute;left:-37px;top:28px;width:18px;height:18px;border-radius:50%;background:var(--cream);box-shadow:inset 0 0 0 3px var(--blush2);transition:background .4s,box-shadow .4s}
+.st.on::before{background:var(--honey);box-shadow:inset 0 0 0 3px var(--honey2)}
+.st small{font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--rose2)}
+.st p{color:var(--mid);font-size:15.5px}
+@media(max-width:900px){.tr{grid-template-columns:1fr}.tr .tx{position:static}}
+
+/* ===== Agendar ===== */
+.ag{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.ag .tx{display:flex;flex-direction:column;gap:18px}
+.ag .tx p{color:var(--mid)}
+.form{border-radius:32px;background:var(--plum);color:var(--cream);padding:clamp(24px,3.4vw,40px);display:grid;gap:18px;box-shadow:0 50px 90px -50px rgba(95,47,72,.8)}
+.f{display:flex;flex-direction:column;gap:8px;min-width:0}
+.f label,.f .lb{font-size:13.5px;font-weight:600;opacity:.8}
+.f input{border:0;border-radius:16px;padding:14px 16px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);color:var(--cream)}
+.f input::placeholder{color:rgba(255,246,239,.55)}
+.chs{display:flex;flex-wrap:wrap;gap:8px}
+.chs button{border:0;cursor:pointer;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);color:var(--cream);font-size:14.5px;font-weight:500;transition:background .3s,color .3s,transform .4s var(--spring)}
+.chs button.on{background:var(--honey);color:var(--plum2);box-shadow:none;transform:scale(1.05)}
+@media(max-width:900px){.ag{grid-template-columns:1fr}}
+
+/* ===== FAQ ===== */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,90px);align-items:start}
+.qa{border-radius:22px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);margin-bottom:10px;transition:box-shadow .3s}
+.qa.on{box-shadow:inset 0 0 0 1.5px var(--rose)}
+.qa button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 22px;background:none;border:0;cursor:pointer;text-align:left;font-family:var(--serif);font-weight:500;font-size:clamp(20px,1.9vw,24px);line-height:1.2;color:var(--plum2)}
+.qa .pl{flex:none;width:36px;height:36px;border-radius:50%;background:var(--blush);display:grid;place-items:center;font-family:var(--f);font-size:18px;transition:transform .5s var(--spring),background .3s}
+.qa.on .pl{transform:rotate(135deg);background:var(--honey)}
+.qa .an{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.qa.on .an{grid-template-rows:1fr}
+.qa .an>div{overflow:hidden}
+.qa .an p{padding:0 22px 22px;color:var(--mid)}
+@media(max-width:900px){.faq{grid-template-columns:1fr}}
+
+/* ===== Local ===== */
+.loc{display:grid;grid-template-columns:.85fr 1.15fr;border-radius:34px;overflow:hidden;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line),0 50px 90px -60px rgba(122,62,92,.6)}
+.loc .info{padding:clamp(28px,4vw,50px);display:flex;flex-direction:column;gap:18px;min-width:0}
+.li{display:flex;gap:14px;align-items:flex-start;padding-bottom:16px;border-bottom:1px dashed var(--line)}
+.li .ic{flex:none;width:46px;height:46px;border-radius:16px;background:var(--blush);color:var(--plum);display:grid;place-items:center}
+.li small{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose2)}
+.li div{min-width:0;overflow-wrap:anywhere}
+.li a{text-decoration:none}
+.hrs{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:15px}
+.hrs span:nth-child(odd){color:var(--mid)}
+.hrs .today{color:var(--plum2);font-weight:700}
+.map{position:relative;min-height:520px;background:var(--blush)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:900px){.loc{grid-template-columns:1fr}.map{min-height:360px}}
+
+/* ===== Final ===== */
+.final{position:relative;overflow:hidden;text-align:center;background:var(--plum);color:var(--cream);padding-block:clamp(110px,14vw,180px)}
+.final .wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:24px}
+.final h2{color:var(--cream);font-size:clamp(50px,8vw,116px);max-width:12ch}
+.final h2 .it{color:var(--honey)}
+.final p{opacity:.85;max-width:44ch}
+#fcurls{position:absolute;inset:0;width:100%;height:100%;opacity:.35;pointer-events:none}
+footer{background:var(--plum2);color:rgba(255,246,239,.75);padding-block:30px;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{text-decoration:none}
+footer a:hover{color:var(--honey)}
+
+.js .rv{opacity:0;transform:translateY(40px) scale(.98);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .rv.on{opacity:1;transform:none}
+.js .rv.d1{transition-delay:.1s}.js .rv.d2{transition-delay:.2s}.js .rv.d3{transition-delay:.3s}
+
+/* ===== Assistente (esquerda) ===== */
+.abt{position:fixed;left:max(18px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));z-index:90;display:flex;align-items:center;gap:12px;border:0;cursor:pointer;padding:7px 20px 7px 7px;border-radius:999px;background:var(--paper);box-shadow:0 0 0 1px var(--line),0 22px 44px -18px rgba(122,62,92,.55);text-align:left;line-height:1.2;transition:transform .4s var(--spring)}
+.abt:hover{transform:translateY(-3px)}
+.abt .av{position:relative;width:46px;height:46px;border-radius:50%;background:var(--plum);display:grid;place-items:center;flex:none}
+.abt .av svg{width:28px;height:28px}
+.abt .av::after{content:"";position:absolute;right:0;bottom:0;width:11px;height:11px;border-radius:50%;background:#7fd3a0;border:2px solid var(--paper)}
+.abt b{display:block;font-weight:700;font-size:14.5px}
+.abt small{font-size:12px;color:var(--mid)}
+.as{position:fixed;left:max(14px,env(safe-area-inset-left));bottom:calc(max(18px,env(safe-area-inset-bottom)) + 74px);z-index:91;width:min(400px,calc(100vw - 28px));max-height:min(640px,calc(100svh - 120px));display:flex;flex-direction:column;border-radius:26px;background:var(--paper);overflow:hidden;box-shadow:0 0 0 1px var(--line),0 50px 90px -30px rgba(122,62,92,.6);transform-origin:bottom left;animation:apop .5s var(--spring)}
+@keyframes apop{from{opacity:0;transform:scale(.86) translateY(16px)}}
+.as header{display:flex;align-items:center;gap:12px;padding:16px;background:var(--plum);color:var(--cream)}
+.as header .av{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
+.as header .av svg{width:26px;height:26px}
+.as header b{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:21px;line-height:1.1}
+.as header small{display:flex;align-items:center;gap:6px;font-size:12.5px;opacity:.85}
+.as header small::before{content:"";width:7px;height:7px;border-radius:50%;background:#9fe6bb}
+.as header button{margin-left:auto;width:34px;height:34px;border-radius:50%;border:0;cursor:pointer;background:rgba(255,255,255,.15);color:var(--cream);font-size:18px}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--cream);font-size:15px;line-height:1.55}
+.m{max-width:88%;padding:11px 15px;border-radius:20px;opacity:0;transform:translateY(8px);animation:fin .4s var(--ease) forwards}
+.m.b{background:var(--paper);border-bottom-left-radius:6px;box-shadow:0 0 0 1px var(--line)}
+.m.u{background:var(--plum);color:var(--cream);align-self:flex-end;border-bottom-right-radius:6px}
+.m a{color:var(--rose2);font-weight:700}
+.m b{font-weight:700;color:var(--plum)}
+.typing{display:flex;gap:5px;padding:15px 16px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--rose2);animation:dt 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dt{50%{transform:translateY(-5px);opacity:.4}}
+.qk{display:flex;gap:7px;padding:10px 12px;overflow-x:auto;border-top:1px solid var(--line);scrollbar-width:none;background:var(--paper)}
+.qk::-webkit-scrollbar{display:none}
+.qk button{flex:none;border:0;cursor:pointer;padding:8px 13px;border-radius:999px;background:var(--blush);font-size:13.5px;font-weight:600;transition:background .25s}
+.qk button:hover{background:var(--honey)}
+.as form{display:flex;gap:8px;padding:12px;background:var(--paper)}
+.as input{flex:1;min-width:0;border:0;border-radius:999px;padding:12px 16px;background:var(--cream);box-shadow:inset 0 0 0 1px var(--line);font-size:15px}
+.as form button{width:46px;height:46px;border-radius:50%;border:0;background:var(--plum);color:var(--honey);cursor:pointer;display:grid;place-items:center;flex:none}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.js .rv,.fx,.hero h1 .ch{opacity:1;transform:none}}
+</style>
+</head>
+<body class="loading">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="mk" viewBox="0 0 40 40"><path d="M20.0 20.0L20.2 20.0L20.3 20.2L20.4 20.3L20.5 20.6L20.4 20.8L20.3 21.1L20.0 21.3L19.7 21.4L19.3 21.5L18.9 21.5L18.4 21.3L18.0 21.0L17.7 20.6L17.4 20.0L17.3 19.4L17.3 18.8L17.5 18.1L17.9 17.4L18.4 16.9L19.1 16.4L19.9 16.1L20.8 16.0L21.8 16.1L22.7 16.5L23.5 17.0L24.3 17.8L24.8 18.8L25.2 19.9L25.3 21.0L25.1 22.3L24.6 23.4L23.8 24.5L22.8 25.4L21.6 26.1L20.2 26.5L18.8 26.5L17.3 26.3L15.8 25.7L14.5 24.7L13.5 23.5L12.7 22.0L12.2 20.3L12.2 18.6L12.5 16.8L13.3 15.1L14.4 13.6L15.9 12.4L17.6 11.5L19.6 11.0L21.6 10.9L23.7 11.3L25.6 12.2L27.3 13.5L28.7 15.2L29.8 17.2L30.3 19.4L30.4 21.8L29.9 24.1L28.9 26.3L27.4 28.2L25.5 29.8L23.2 31.0L20.7 31.6L18.1 31.7L15.5 31.1L13.0 30.0L10.9 28.4L9.1 26.2L7.8 23.7L7.1 20.9L7.0 18.0L7.6 15.1L8.9 12.4L10.7 10.0L13.1 8.0L15.8 6.6L18.9 5.8L22.1 5.7L25.3 6.4L28.3 7.7L30.9 9.7L33.1 12.3L34.6 15.4L35.5 18.7L35.6 22.2L34.9 25.6L33.4 28.9L31.2 31.8L28.4 34.1L25.1 35.8" fill="none" stroke="#f2c46a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.2 1.2Z"/></symbol>
+  <symbol id="sq" viewBox="0 0 100 100"><path d="M50.0 50.0L50.3 50.1L50.6 50.2L50.8 50.5L50.9 50.8L51.0 51.2L50.9 51.7L50.7 52.1L50.3 52.5L49.9 52.8L49.3 53.1L48.6 53.2L47.9 53.1L47.2 53.0L46.4 52.6L45.8 52.0L45.2 51.3L44.7 50.5L44.4 49.5L44.2 48.4L44.3 47.3L44.7 46.1L45.2 45.0L46.0 44.0L47.0 43.1L48.3 42.3L49.6 41.8L51.1 41.6L52.7 41.6L54.3 42.0L55.9 42.6L57.3 43.6L58.6 44.8L59.7 46.4L60.5 48.1L61.0 50.0L61.1 52.0L60.9 54.1L60.3 56.1L59.2 58.1L57.8 59.8L56.1 61.3L54.1 62.6L51.8 63.4L49.4 63.8L46.9 63.8L44.3 63.3L41.9 62.3L39.6 60.9L37.5 59.1L35.8 56.8L34.5 54.3L33.7 51.5L33.4 48.5L33.6 45.5L34.4 42.5L35.8 39.7L37.6 37.1L40.0 34.8L42.7 32.9L45.8 31.6L49.1 30.8L52.6 30.7L56.1 31.2L59.5 32.3L62.7 34.0L65.6 36.4L68.1 39.2L70.0 42.5L71.3 46.1L72.0 50.0L72.0 54.0L71.2 58.0L69.7 61.8L67.5 65.3L64.7 68.4L61.3 71.0L57.5 73.0L53.3 74.3L48.9 74.8L44.4 74.5L40.0 73.4L35.8 71.5L32.0 68.9L28.6 65.5L25.9 61.6L23.9 57.2L22.8 52.5L22.5 47.5L23.0 42.6L24.5 37.7L26.9 33.2L30.0 29.1L33.9 25.6L38.4 22.8L43.4 20.9L48.6 19.9L54.1 19.8L59.5 20.7L64.7 22.6L69.6 25.4L73.9 29.1L77.5 33.6L80.3 38.6L82.2 44.2L83.0 50.0L82.8 55.9L81.5 61.8L79.1 67.4L75.8 72.5L71.6 77.0L66.5 80.7L60.9 83.5L54.8 85.2L48.4 85.8L42.0 85.2L35.7 83.5L29.7 80.7L24.4 76.8L19.7 72.0L16.0 66.4L13.3 60.1L11.8 53.4L11.5 46.5L12.4 39.6L14.6 33.0L18.0 26.7L22.4 21.2L27.8 16.4L34.1 12.7L40.9 10.2L48.2 8.9L55.6 8.9L62.9 10.2L70.0 12.9L76.5 16.8L82.2 21.9L87.0 27.9L90.6 34.8L93.0 42.2L94.0 50.0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<!-- ABERTURA 0-100 -->
+<div class="loader" id="loader" aria-hidden="true"><div class="ld">
+  <svg viewBox="0 0 200 200"><path class="sp" id="ldS" d=""/></svg>
+  <div class="n"><span id="ldN">0</span><small>%</small></div>
+  <div class="nm">Espiral</div><div class="sb">Studio de cachos e crespos</div>
+</div></div>
+
+<nav class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="#inicio" aria-label="Espiral Studio, início"><span class="mk"><svg><use href="#mk"/></svg></span><span><b>Espiral</b><small>Cachos &amp; Crespos</small></span></a>
+  <div class="links"><a href="#curvatura">Sua curvatura</a><a href="#servicos">Serviços</a><a href="#teste">Teste</a><a href="#cronograma">Cronograma</a><a href="#transicao">Transição</a><a href="#contato">Contato</a></div>
+  <a class="btn p wa" href="#" data-msg="Oi, Espiral! Vim pelo site e quero agendar um horário."><svg><use href="#i-wa"/></svg><span>Agendar</span></a>
+</div></nav>
+
+<header class="hero" id="inicio">
+  <canvas id="curls" aria-hidden="true"></canvas>
+  <div class="wrap hgrid">
+    <div class="htx">
+      <span class="tag fx" style="--d:.05s"><svg><use href="#mk"/></svg>Especialistas em cabelos cacheados e crespos</span>
+      <h1 id="h1">Seu cacho, do <span class="it">seu jeito.</span></h1>
+      <p class="lead fx" style="--d:.8s">Corte pensado para a sua curvatura, definição que dura, hidratação de verdade e todo o apoio na transição capilar. Aqui ninguém alisa o que você é: a gente realça.</p>
+      <div class="cta fx" style="--d:.95s"><a class="btn p wa" href="#" data-msg="Oi, Espiral! Vim pelo site e quero agendar um horário."><svg><use href="#i-wa"/></svg>Agendar meu horário <span class="ar">→</span></a><a class="btn o" href="#teste">Fazer o teste do cabelo</a></div>
+      <div class="pills fx" style="--d:1.1s"><span>Corte a seco</span><span>Definição</span><span>Hidratação</span><span>Transição capilar</span></div>
+    </div>
+    <div class="art fx" style="--d:.3s">
+      <span class="bg"></span>
+      <svg viewBox="0 0 400 400" aria-hidden="true">
+        <g class="hair" id="hair"></g>
+        <path d="M168 300c0-30 14-46 32-46s32 16 32 46" fill="#c98a6b"/>
+        <ellipse cx="200" cy="232" rx="54" ry="64" fill="#d99a78"/>
+        <path d="M120 400c6-62 40-92 80-92s74 30 80 92Z" fill="#7a3e5c"/>
+        <path d="M150 400c10-40 28-58 50-58s40 18 50 58" fill="#a8678a"/>
+        <g fill="#5f2f48"><ellipse cx="180" cy="232" rx="5" ry="6"/><ellipse cx="220" cy="232" rx="5" ry="6"/></g>
+        <path d="M186 262q14 12 28 0" fill="none" stroke="#5f2f48" stroke-width="3.5" stroke-linecap="round"/>
+        <g fill="#e9a7b8" opacity=".6"><ellipse cx="168" cy="252" rx="10" ry="6"/><ellipse cx="232" cy="252" rx="10" ry="6"/></g>
+        <circle cx="146" cy="250" r="6" fill="#f2c46a"/><circle cx="254" cy="250" r="6" fill="#f2c46a"/>
+        <g id="front"></g>
+      </svg>
+      <div class="chip c1"><i>✨</i><span>Definição que dura<small>até a próxima lavagem</small></span></div>
+      <div class="chip c2"><i>💧</i><span>Sem frizz, com volume<small>cuidado por curvatura</small></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wv" aria-hidden="true"><svg viewBox="0 0 2400 120" preserveAspectRatio="none"><path id="wvp" d="" fill="none" stroke="#e9a7b8" stroke-width="3"/><path id="wvp2" d="" fill="none" stroke="#f2c46a" stroke-width="3"/></svg></div>
+
+<section class="curv pad" id="curvatura"><div class="wrap cg">
+  <div class="tx">
+    <span class="tag rv"><svg><use href="#mk"/></svg>Descubra sua curvatura</span>
+    <h2 class="rv d1">Cada fio tem <span class="it">o seu formato.</span></h2>
+    <p class="rv d2">Do ondulado 2A ao crespo 4C, cada curvatura pede um cuidado diferente. Toque no seu tipo ou arraste a barra e veja o fio mudar.</p>
+    <div class="types rv d2" id="types"></div>
+    <input class="rv d2" type="range" id="cr" min="0" max="9" step="1" value="4" aria-label="Escolha a curvatura">
+    <div class="tinfo rv d3" id="tinfo" aria-live="polite"></div>
+  </div>
+  <div class="strand rv d1"><div class="big" id="tBig">3B<small>Cacheado</small></div><svg viewBox="0 0 300 320" aria-hidden="true"><path class="s3" id="s3"/><path class="s2" id="s2"/><path id="s1"/></svg></div>
+</div></section>
+
+<section class="pad" id="servicos"><div class="wrap">
+  <div class="sh"><div class="l"><span class="tag rv"><svg><use href="#mk"/></svg>Serviços</span><h2 class="rv d1">Tudo o que o seu <span class="it">cacho pede.</span></h2></div><p class="rv d2">Cada atendimento começa com uma conversa sobre o seu cabelo, a sua rotina e o resultado que você quer.</p></div>
+  <div class="svs">
+    <article class="sv rv"><svg class="sq" style="color:var(--rose)"><use href="#sq"/></svg><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="#7a3e5c" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="24" r="4"/><circle cx="23" cy="24" r="4"/><path d="M11.5 21 24 4M20.5 21 8 4"/></svg></span><h3>Corte para cacheadas</h3><p>Corte a seco, fio a fio, respeitando a curvatura e o volume natural. Formato que valoriza o seu rosto.</p><div class="ft"><span class="pr">a partir de<b>R$ 120</b></span><a class="go wa" href="#" data-msg="Oi, Espiral! Quero agendar um corte para cacheadas." aria-label="Agendar corte">→</a></div></article>
+    <article class="sv rv d1" style="--c:#fdf0d6"><svg class="sq" style="color:var(--honey)"><use href="#sq"/></svg><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="#7a3e5c" stroke-width="1.6" stroke-linecap="round"><path d="M16 4s9 10 9 16a9 9 0 0 1-18 0c0-6 9-16 9-16Z"/><path d="M12 21c1 2 3 3 5 3"/></svg></span><h3>Hidratação profunda</h3><p>Devolve água, maciez e brilho para fios ressecados. Ideal para cabelos com frizz e sem movimento.</p><div class="ft"><span class="pr">a partir de<b>R$ 90</b></span><a class="go wa" href="#" data-msg="Oi, Espiral! Quero agendar uma hidratação." aria-label="Agendar hidratação">→</a></div></article>
+    <article class="sv rv d2" style="--c:var(--mint)"><svg class="sq" style="color:var(--sage)"><use href="#sq"/></svg><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="#7a3e5c" stroke-width="1.6" stroke-linecap="round"><path d="M10 28c0-6 12-6 12-12S10 10 10 4M22 28c0-6-12-6-12-12S22 10 22 4"/></svg></span><h3>Definição e finalização</h3><p>Técnicas de fitagem, dedoliss e difusor para cachos definidos, leves e com volume na medida certa.</p><div class="ft"><span class="pr">a partir de<b>R$ 80</b></span><a class="go wa" href="#" data-msg="Oi, Espiral! Quero agendar uma definição/finalização." aria-label="Agendar definição">→</a></div></article>
+    <article class="sv rv" style="--c:#f6e0ea"><svg class="sq" style="color:var(--plum3)"><use href="#sq"/></svg><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="#7a3e5c" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="7" width="22" height="20" rx="4"/><path d="M5 13h22M11 4v6M21 4v6M11 19h4M11 23h8"/></svg></span><h3>Cronograma capilar</h3><p>Hidratação, nutrição e reconstrução na ordem certa para o seu fio, com acompanhamento semana a semana.</p><div class="ft"><span class="pr">pacote mensal<b>R$ 280</b></span><a class="go wa" href="#" data-msg="Oi, Espiral! Quero saber do cronograma capilar." aria-label="Saber do cronograma">→</a></div></article>
+    <article class="sv rv d1" style="--c:#e3f1fb"><svg class="sq" style="color:#9ec7e2"><use href="#sq"/></svg><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="#7a3e5c" stroke-width="1.6" stroke-linecap="round"><path d="M6 6v20M26 6c-6 0-6 5-10 5S10 6 6 6M26 26c-6 0-6-5-10-5s-6 5-10 5M26 6v20"/></svg></span><h3>Transição capilar</h3><p>Acompanhamento do alisado ao natural: cortes estratégicos, finalizações e muito apoio no caminho.</p><div class="ft"><span class="pr">avaliação<b>Gratuita</b></span><a class="go wa" href="#" data-msg="Oi, Espiral! Estou em transição capilar e quero ajuda." aria-label="Falar sobre transição">→</a></div></article>
+    <article class="sv rv d2" style="--c:var(--blush2)"><svg class="sq" style="color:var(--rose2)"><use href="#sq"/></svg><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="#7a3e5c" stroke-width="1.6" stroke-linecap="round"><path d="M16 4c-6 6-10 10-10 15a10 10 0 0 0 20 0c0-5-4-9-10-15Z"/><path d="M11 18h10M16 13v10"/></svg></span><h3>Umectação e nutrição</h3><p>Óleos e manteigas vegetais para repor a oleosidade natural e devolver o brilho dos fios crespos.</p><div class="ft"><span class="pr">a partir de<b>R$ 100</b></span><a class="go wa" href="#" data-msg="Oi, Espiral! Quero agendar uma nutrição/umectação." aria-label="Agendar nutrição">→</a></div></article>
+  </div>
+</div></section>
+
+<section class="pad" id="teste" style="padding-top:0"><div class="wrap qz">
+  <div class="tx">
+    <span class="tag rv"><svg><use href="#mk"/></svg>Teste rápido</span>
+    <h2 class="rv d1">Do que o seu cabelo <span class="it">precisa agora?</span></h2>
+    <p class="rv d2">Três perguntas e você descobre o tratamento ideal para o momento do seu fio. O resultado vai direto para o nosso WhatsApp.</p>
+  </div>
+  <div class="qcard rv d1"><div class="qbar"><i id="qbar"></i></div><div id="qbox" aria-live="polite"></div></div>
+</div></section>
+
+<section class="cron pad" id="cronograma"><div class="wrap">
+  <div class="sh"><div class="l"><span class="tag rv"><svg><use href="#mk"/></svg>Cronograma capilar</span><h2 class="rv d1">Um mês de cuidado <span class="it">na ordem certa.</span></h2></div><p class="rv d2">Exemplo de cronograma para fios ressecados. O seu é montado depois da avaliação no studio.</p></div>
+  <div class="cgrid">
+    <div class="wk rv"><b>Semana 1</b><div class="d"><span class="H">Hidratação</span><span class="N">Nutrição</span><span class="H">Hidratação</span></div></div>
+    <div class="wk rv d1"><b>Semana 2</b><div class="d"><span class="H">Hidratação</span><span class="N">Nutrição</span><span class="R">Reconstrução</span></div></div>
+    <div class="wk rv d2"><b>Semana 3</b><div class="d"><span class="H">Hidratação</span><span class="N">Nutrição</span><span class="H">Hidratação</span></div></div>
+    <div class="wk rv d3"><b>Semana 4</b><div class="d"><span class="N">Nutrição</span><span class="H">Hidratação</span><span class="N">Nutrição</span></div></div>
+  </div>
+  <div class="leg rv"><span class="H">Hidratação · devolve água</span><span class="N">Nutrição · repõe óleos</span><span class="R">Reconstrução · repõe massa</span></div>
+  <p class="note rv">Passe o mouse ou toque nos dias. Cada fio responde de um jeito: por isso a avaliação vem primeiro.</p>
+</div></section>
+
+<section class="pad" id="transicao"><div class="wrap tr">
+  <div class="tx">
+    <span class="tag rv"><svg><use href="#mk"/></svg>Transição capilar</span>
+    <h2 class="rv d1">Você não precisa <span class="it">passar por isso sozinha.</span></h2>
+    <p class="rv d2">A transição é uma jornada. A gente acompanha cada fase, com cortes estratégicos e finalizações que deixam o caminho mais leve.</p>
+    <a class="btn h wa rv d3" style="align-self:flex-start" href="#" data-msg="Oi, Espiral! Quero começar minha transição capilar.">Começar minha transição <span class="ar">→</span></a>
+  </div>
+  <div class="tl" id="tl"><span class="fill" id="tlf"></span>
+    <div class="st rv"><small>Fase 1</small><h3>A decisão</h3><p>Paramos a química e fazemos uma avaliação completa: quanto há de fio natural, saúde do couro e expectativas.</p></div>
+    <div class="st rv"><small>Fase 2</small><h3>Fios de duas texturas</h3><p>A fase mais desafiadora. Técnicas de finalização que unem as duas texturas e disfarçam a diferença.</p></div>
+    <div class="st rv"><small>Fase 3</small><h3>Cortes estratégicos</h3><p>Pequenos cortes, no seu ritmo, para ir retirando as pontas alisadas sem perder o comprimento de uma vez.</p></div>
+    <div class="st rv"><small>Fase 4</small><h3>Big chop (se quiser!)</h3><p>O grande corte é opcional. Se for o seu momento, fazemos com todo o cuidado e uma finalização especial.</p></div>
+    <div class="st rv"><small>Fase 5</small><h3>Seu cacho livre</h3><p>Fio 100% natural e uma rotina que você aprende a fazer em casa. A gente continua aqui para a manutenção.</p></div>
+  </div>
+</div></section>
+
+<section class="pad" id="agendar" style="padding-top:0"><div class="wrap ag">
+  <div class="tx">
+    <span class="tag rv"><svg><use href="#mk"/></svg>Agendamento</span>
+    <h2 class="rv d1">Seu horário em <span class="it">um minuto.</span></h2>
+    <p class="rv d2">Escolha o serviço e o melhor período. A mensagem chega pronta no nosso WhatsApp e a gente confirma o horário com você.</p>
+  </div>
+  <form class="form rv d1" id="agF">
+    <div class="f"><label for="aN">Seu nome</label><input id="aN" autocomplete="name" placeholder="Como podemos te chamar?"></div>
+    <div class="f"><span class="lb">Serviço</span><div class="chs" data-k="s"><button type="button" class="on">Corte</button><button type="button">Hidratação</button><button type="button">Definição</button><button type="button">Cronograma</button><button type="button">Transição</button><button type="button">Nutrição</button></div></div>
+    <div class="f"><span class="lb">Meu cabelo é</span><div class="chs" data-k="t"><button type="button">Ondulado</button><button type="button" class="on">Cacheado</button><button type="button">Crespo</button><button type="button">Em transição</button></div></div>
+    <div class="f"><span class="lb">Melhor período</span><div class="chs" data-k="p"><button type="button" class="on">Manhã</button><button type="button">Tarde</button><button type="button">Sábado</button></div></div>
+    <button class="btn h" type="submit"><svg><use href="#i-wa"/></svg>Enviar pelo WhatsApp <span class="ar">→</span></button>
+  </form>
+</div></section>
+
+<section class="pad" style="padding-top:0"><div class="wrap faq">
+  <div style="display:flex;flex-direction:column;gap:18px"><span class="tag rv"><svg><use href="#mk"/></svg>Dúvidas</span><h2 class="rv d1">Perguntas <span class="it">frequentes.</span></h2><p class="rv d2" style="color:var(--mid)">A assistente virtual também responde na hora, no cantinho da tela.</p></div>
+  <div class="rv d1" id="faq">
+    <div class="qa on"><button aria-expanded="true">Como funciona o corte a seco?<span class="pl">+</span></button><div class="an"><div><p>O cabelo é cortado seco e solto, na forma natural de cada cacho. Assim dá para ver o volume real e evitar surpresas quando ele seca.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false">Preciso ir com o cabelo lavado?<span class="pl">+</span></button><div class="an"><div><p>Para o corte, venha com o cabelo lavado e finalizado do jeito que você usa no dia a dia, sem prender. Para tratamentos, não precisa.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false">Quanto tempo dura um atendimento?<span class="pl">+</span></button><div class="an"><div><p>Em média de 1h30 a 3h, dependendo do serviço, do comprimento e do volume. Reserve um tempinho só para você.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false">Vocês atendem cabelo crespo 4C?<span class="pl">+</span></button><div class="an"><div><p>Sim! Atendemos todas as curvaturas, do ondulado ao crespo, com técnicas e produtos pensados para cada tipo.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false">Quais as formas de pagamento?<span class="pl">+</span></button><div class="an"><div><p>Pix, cartão de débito e crédito. Pacotes de cronograma podem ser parcelados.</p></div></div></div>
+  </div>
+</div></section>
+
+<section id="contato" style="padding-bottom:clamp(80px,10vw,130px)"><div class="wrap">
+  <div class="sh"><div class="l"><span class="tag rv"><svg><use href="#mk"/></svg>Contato</span><h2 class="rv d1">Vem cuidar <span class="it">dos seus cachos.</span></h2></div></div>
+  <div class="loc rv">
+    <div class="info">
+      <div class="li"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><small>Endereço</small>Av. Santo Antônio, 300 · Centro<br>Garanhuns - PE</div></div>
+      <div class="li"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><small>Horários</small><div class="hrs" id="hrs"><span data-d="1,2,3,4,5">Seg a sex</span><span data-d="1,2,3,4,5">9h às 19h</span><span data-d="6">Sábado</span><span data-d="6">8h às 16h</span><span data-d="0">Domingo</span><span data-d="0">Fechado</span></div></div></div>
+      <div class="li"><span class="ic"><svg width="22" height="22"><use href="#i-wa"/></svg></span><div><small>WhatsApp</small><a class="wa" href="#" data-msg="Oi, Espiral! Vim pelo site.">(87) 99999-0000</a></div></div>
+      <div class="li" style="border:0;padding:0"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span><div><small>Instagram</small>@espiral.cachos</div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px"><a class="btn p" href="https://www.google.com/maps/dir/?api=1&destination=Av.+Santo+Ant%C3%B4nio,+Garanhuns+-+PE" target="_blank" rel="noopener">Como chegar <span class="ar">→</span></a><a class="btn o wa" href="#" data-msg="Oi, Espiral! Quero agendar um horário.">Agendar</a></div>
+    </div>
+    <div class="map"><iframe title="Mapa do Espiral Studio" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Av.+Santo+Ant%C3%B4nio,+Garanhuns+-+PE&output=embed"></iframe></div>
+  </div>
+</div></section>
+
+<section class="final" id="final">
+  <canvas id="fcurls" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="tag rv" style="background:rgba(255,255,255,.1);color:var(--blush);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)"><svg><use href="#mk"/></svg>Bora cachear?</span>
+    <h2 class="rv d1">Solta esse <span class="it">cabelo.</span></h2>
+    <p class="rv d2">Agende seu horário e descubra tudo o que o seu cacho pode ser.</p>
+    <a class="btn h wa rv d3" href="#" data-msg="Oi, Espiral! Vim pelo site e quero agendar meu horário."><svg><use href="#i-wa"/></svg>Agendar pelo WhatsApp <span class="ar">→</span></a>
+  </div>
+</section>
+<footer><div class="wrap"><span>© <span id="yr">2026</span> Espiral · Studio de Cachos e Crespos · Garanhuns - PE</span><a class="wa" href="#" data-msg="Oi, Espiral! Vim pelo site.">(87) 99999-0000</a></div></footer>
+
+<button class="abt" id="ab" aria-expanded="false" aria-controls="as"><span class="av"><svg><use href="#mk"/></svg></span><span><b>Assistente Espiral</b><small>Dúvidas sobre seus cachos?</small></span></button>
+<div class="as" id="as" hidden role="dialog" aria-label="Assistente virtual">
+  <header><span class="av"><svg><use href="#mk"/></svg></span><div><b>Assistente Espiral</b><small>Online agora</small></div><button id="asX" aria-label="Fechar">×</button></header>
+  <div class="msgs" id="msgs" aria-live="polite"></div>
+  <div class="qk" id="qk"></div>
+  <form id="asF"><input id="asI" placeholder="Pergunte sobre seus cachos…" autocomplete="off" aria-label="Sua pergunta" maxlength="200"><button aria-label="Enviar"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5 21 12 3 3.5v6.6l12 1.9-12 1.9Z"/></svg></button></form>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+const WA='5587999990000', wa=m=>'https://wa.me/'+WA+'?text='+encodeURIComponent(m);
+const bindWA=r=>r.querySelectorAll('.wa').forEach(a=>{a.href=wa(a.dataset.msg||'Oi, Espiral! Vim pelo site.');a.target='_blank';a.rel='noopener'});
+bindWA(document);document.getElementById('yr').textContent=new Date().getFullYear();
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, fine=matchMedia('(hover:hover)').matches;
+const NS='http://www.w3.org/2000/svg';
+
+// espiral (arquimedes) como caminho
+function spiral(cx,cy,turns,step,pts){let d='';for(let i=0;i<=pts;i++){const t=i/pts*turns*Math.PI*2,r=step*t/(Math.PI*2);d+=(i?'L':'M')+(cx+Math.cos(t)*r).toFixed(1)+' '+(cy+Math.sin(t)*r).toFixed(1)}return d}
+
+// abertura: o cacho se desenha de 0 a 100
+(function(){const L=document.getElementById('loader'),N=document.getElementById('ldN'),S=document.getElementById('ldS');S.setAttribute('d',spiral(100,100,4.2,22,420));const len=S.getTotalLength();S.style.strokeDasharray=len;S.style.strokeDashoffset=len;
+  const dur=reduce?200:2600,t0=performance.now();let fin=false;
+  function f(t){const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;N.textContent=Math.round(e*100);S.style.strokeDashoffset=len*(1-e);if(p<1)requestAnimationFrame(f);else setTimeout(done,380)}
+  function done(){if(fin)return;fin=true;L.classList.add('go');document.body.classList.remove('loading');document.body.classList.add('ready');setTimeout(()=>L.remove(),1200)}
+  requestAnimationFrame(f);setTimeout(done,5600)})();
+
+// título letra a letra (pula e assenta)
+(function(){const h=document.getElementById('h1');let i=0;const sp=(n,cls)=>{const f=document.createDocumentFragment();n.textContent.split(/(\s+)/).forEach(w=>{if(!w.trim()){f.appendChild(document.createTextNode(w));return}const ws=document.createElement('span');ws.style.whiteSpace='nowrap';if(cls)ws.className=cls;[...w].forEach(c=>{const s=document.createElement('span');s.className='ch';s.textContent=c;s.style.setProperty('--i',i++);ws.appendChild(s)});f.appendChild(ws)});return f};[...h.childNodes].forEach(n=>n.replaceWith(sp(n,n.nodeType===1?n.className:'')))})();
+
+// cabelo da ilustração: cachinhos
+(function(){const g=document.getElementById('hair'),fr=document.getElementById('front'),cols=['#5f2f48','#7a3e5c','#6b3550','#8a4a6b'];let k=0;
+  for(let a=0;a<360;a+=9){for(const r of [118,96,74]){const rad=(a-90)*Math.PI/180,x=200+Math.cos(rad)*r*1.05,y=196+Math.sin(rad)*r*.92;if(y>250&&r<100)continue;if(y>300)continue;const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',y.toFixed(1));c.setAttribute('r',(18+((a*7+r)%9)).toFixed(1));c.setAttribute('fill',cols[(k++)%4]);c.style.setProperty('--d',((a+r)%36)/10);g.appendChild(c)}}
+  // franja de cachos por cima da testa
+  for(let x=150;x<=250;x+=14){const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',176+Math.abs(200-x)*.12);c.setAttribute('r',15);c.setAttribute('fill',cols[(k++)%4]);fr.appendChild(c)}
+  // brilhos dourados
+  for(let i=0;i<8;i++){const a=Math.random()*Math.PI*2,r=60+Math.random()*60;const c=document.createElementNS(NS,'path');const x=200+Math.cos(a)*r,y=190+Math.sin(a)*r*.8;if(y>250)continue;c.setAttribute('d','M'+x+' '+y+'c0-3 3-3 3 0');c.setAttribute('stroke','#f2c46a');c.setAttribute('stroke-width','2');c.setAttribute('fill','none');c.setAttribute('stroke-linecap','round');fr.appendChild(c)}})();
+
+// cachos flutuando no fundo (canvas) — reagem ao mouse
+function curlField(cv,cols,count,alpha){const x=cv.getContext('2d');let W,H,P=[],mx=-999,my=-999;const dpr=Math.min(2,devicePixelRatio||1);
+  function size(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);P=Array.from({length:count(W,H)},()=>({x:Math.random()*W,y:Math.random()*H,s:10+Math.random()*22,r:Math.random()*6.28,v:(Math.random()-.5)*.006,dy:.08+Math.random()*.18,c:cols[Math.floor(Math.random()*cols.length)],t:2+Math.random()*1.5}))}
+  cv.parentElement.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});cv.parentElement.addEventListener('pointerleave',()=>{mx=my=-999});
+  let vis=true;new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(cv);
+  function draw(){if(vis){x.clearRect(0,0,W,H);P.forEach(p=>{if(!reduce){p.r+=p.v*6;p.y-=p.dy;if(p.y<-40){p.y=H+40;p.x=Math.random()*W}const dx=p.x-mx,dy=p.y-my,d=Math.hypot(dx,dy);if(d<120){p.x+=dx/d*1.6;p.y+=dy/d*1.6}}
+      x.save();x.translate(p.x,p.y);x.rotate(p.r);x.globalAlpha=alpha;x.strokeStyle=p.c;x.lineWidth=2.4;x.lineCap='round';x.beginPath();const n=60;for(let i=0;i<=n;i++){const t=i/n*p.t*Math.PI*2,r=p.s*t/(p.t*Math.PI*2);const X=Math.cos(t)*r,Y=Math.sin(t)*r;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke();x.restore()})}if(!reduce)requestAnimationFrame(draw)}
+  size();addEventListener('resize',size);requestAnimationFrame(draw)}
+curlField(document.getElementById('curls'),['#e9a7b8','#f2c46a','#a8678a','#8fb8a2'],(W,H)=>Math.round(W*H/34000),.4);
+curlField(document.getElementById('fcurls'),['#e9a7b8','#f2c46a','#fff6ef'],(W,H)=>Math.round(W*H/22000),.7);
+
+// faixa ondulada
+(function(){const mk=(amp,ph)=>{let d='M0 60';for(let x=0;x<=2400;x+=20)d+='L'+x+' '+(60+Math.sin(x/60+ph)*amp+Math.sin(x/23+ph)*amp*.3).toFixed(1);return d};document.getElementById('wvp').setAttribute('d',mk(22,0));document.getElementById('wvp2').setAttribute('d',mk(14,2))})();
+
+// rolagem
+const nav=document.getElementById('nav'),tl=document.getElementById('tl'),tlf=document.getElementById('tlf'),sts=[...document.querySelectorAll('.st')];
+function onScroll(){nav.classList.toggle('solid',scrollY>30);const r=tl.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*.6-r.top)/r.height));tlf.style.setProperty('--h',(p*100)+'%');sts.forEach(s=>{const b=s.getBoundingClientRect();s.classList.toggle('on',b.top<innerHeight*.6)})}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(x=>io.observe(x));
+
+// curvatura interativa
+(function(){const T=[
+ ['2A','Ondulado','Ondas suaves e soltas, quase lisas na raiz. Pesa fácil: o segredo são produtos leves.',['Leave-in leve','Corte em camadas','Difusor']],
+ ['2B','Ondulado','Ondas em S mais marcadas do meio para as pontas, com tendência ao frizz.',['Fitagem','Gel leve','Corte a seco']],
+ ['2C','Ondulado','Ondas fortes em S, alguns cachinhos soltos e bastante volume.',['Hidratação','Gelatina','Difusor']],
+ ['3A','Cacheado','Cachos largos e soltos, bem definidos e com brilho natural.',['Dedoliss','Hidratação','Corte a seco']],
+ ['3B','Cacheado','Cachos médios, em molinhas, com volume e tendência ao ressecamento.',['Cronograma','Fitagem','Nutrição']],
+ ['3C','Cacheado','Cachos fechados e densos, muito volume e fios que pedem nutrição.',['Umectação','Cronograma','Definição']],
+ ['4A','Crespo','Cachos bem fechados em mola, macios, com encolhimento visível.',['Nutrição','Twist','Hidratação']],
+ ['4B','Crespo','Fios em zigue-zague, sem cacho definido, muito volume e fragilidade.',['Umectação','Fitagem','Corte']],
+ ['4C','Crespo','Fios em zigue-zague bem fechado, com grande encolhimento. Pede muita hidratação.',['Manteigas','Twist','Cronograma']],
+ ['T','Em transição','Duas texturas no mesmo fio: raiz natural e pontas com química. A fase pede paciência e apoio.',['Cortes estratégicos','Finalização','Hidratação']]];
+  const box=document.getElementById('types'),rg=document.getElementById('cr'),inf=document.getElementById('tinfo'),big=document.getElementById('tBig'),s1=document.getElementById('s1'),s2=document.getElementById('s2'),s3=document.getElementById('s3');
+  box.innerHTML=T.map((t,i)=>'<button type="button" aria-label="Tipo '+t[0]+'">'+t[0]+'</button>').join('');const bs=[...box.children];
+  function strand(i,ox,ph){const idx=Math.min(i,8);const amp=8+idx*4.2,freq=1.2+idx*.9,zig=idx>=7;let d='';for(let k=0;k<=160;k++){const t=k/160,y=20+t*280,a=amp*(.6+t*.6);const fr=((t*freq+ph/6.283)%1+1)%1;let x=150+ox+(zig?(Math.abs(fr*2-1)*2-1)*a:Math.sin(t*freq*Math.PI*2+ph)*a);
+      if(i===9){x=t<.45?150+ox+Math.sin(t*6*Math.PI*2+ph)*20:150+ox+Math.sin(t*1.5+ph)*3}d+=(k?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)}return d}
+  function set(i){bs.forEach((b,k)=>b.classList.toggle('on',k===i));rg.value=i;const t=T[i];big.innerHTML=t[0]+'<small>'+t[1]+'</small>';s1.setAttribute('d',strand(i,10,0));s2.setAttribute('d',strand(i,-40,1.3));s3.setAttribute('d',strand(i,60,2.4));
+    inf.innerHTML='<h3>'+t[1]+' '+t[0]+'</h3><p>'+t[2]+'</p><div class="tg">'+t[3].map(x=>'<span>'+x+'</span>').join('')+'</div><a class="btn p wa" style="align-self:flex-start;margin-top:6px" href="#" data-msg="Oi, Espiral! Acho que meu cabelo é '+t[1].toLowerCase()+' '+t[0]+'. Quero agendar uma avaliação.">Meu cabelo é '+t[0]+' <span class="ar">→</span></a>';bindWA(inf)}
+  bs.forEach((b,i)=>b.onclick=()=>set(i));rg.oninput=()=>set(+rg.value);set(4)})();
+
+// teste
+(function(){const Q=[
+ {q:'Como seu cabelo fica ao secar?',o:[['🌵','Áspero e opaco','N'],['☁️','Com muito frizz','H'],['🧶','Elástico, “chiclete”','R'],['😊','Até que bem, só sem definição','D']]},
+ {q:'Quando você passa o dedo no fio…',o:[['🪶','Parece sem vida, sem brilho','N'],['🏜️','Sinto seco e embaraçado','H'],['💔','Ele quebra com facilidade','R'],['✨','Está macio, só desmancha rápido','D']]},
+ {q:'O que mais te incomoda hoje?',o:[['📏','Pontas ressecadas','N'],['🌬️','Volume descontrolado','H'],['🧪','Química ou muito calor','R'],['🌀','Cacho que não define','D']]}];
+  const R={H:['Hidratação profunda','Seu fio está pedindo água! A hidratação devolve maciez, reduz o frizz e traz movimento de volta aos cachos.'],N:['Nutrição e umectação','Seu fio precisa repor óleos. A nutrição devolve brilho, protege as pontas e deixa o cabelo mais pesado na medida.'],R:['Reconstrução','Seu fio está fragilizado e precisa repor massa. A reconstrução fortalece e diminui a quebra, sempre com avaliação antes.'],D:['Corte + definição','Seu cabelo está saudável! Um corte a seco para a sua curvatura e uma boa finalização vão fazer seus cachos brilharem.']};
+  const box=document.getElementById('qbox'),bar=document.getElementById('qbar');let ans=[];
+  function show(i){bar.style.width=(i/Q.length*100)+'%';if(i>=Q.length)return res();const q=Q[i];box.innerHTML='<div class="qstep"><small>Pergunta '+(i+1)+' de '+Q.length+'</small><h3>'+q.q+'</h3><div class="qopts">'+q.o.map((o,k)=>'<button type="button" data-k="'+k+'"><span class="e">'+o[0]+'</span>'+o[1]+'</button>').join('')+'</div></div>';
+    box.querySelectorAll('button').forEach(b=>b.onclick=()=>{const o=q.o[+b.dataset.k];ans.push([q.q,o[1],o[2]]);show(i+1)})}
+  function res(){const c={};ans.forEach(a=>c[a[2]]=(c[a[2]]||0)+1);const top=Object.keys(c).sort((a,b)=>c[b]-c[a])[0],r=R[top];
+    box.innerHTML='<div class="qres"><span class="badge">Seu resultado</span><h3>'+r[0]+'</h3><p>'+r[1]+'</p><div class="row"><a class="btn p" target="_blank" rel="noopener" href="'+wa('Oi, Espiral! Fiz o teste do site e deu: '+r[0]+'.\n'+ans.map(a=>'• '+a[0]+' '+a[1]).join('\n')+'\nQuero agendar!')+'">Agendar '+r[0].split(' ')[0].toLowerCase()+' <span class="ar">→</span></a><button type="button" class="btn o" id="qAgain">Refazer</button></div><p style="font-size:13px">Resultado ilustrativo. A avaliação no studio confirma o melhor tratamento.</p></div>';
+    document.getElementById('qAgain').onclick=()=>{ans=[];show(0)}}
+  show(0)})();
+
+// horário de hoje
+(function(){const d=new Date().getDay();document.querySelectorAll('#hrs span').forEach(s=>{if(s.dataset.d.split(',').includes(String(d)))s.classList.add('today')})})();
+
+// agendar
+(function(){document.querySelectorAll('.chs').forEach(o=>{const bs=[...o.children];bs.forEach(b=>b.onclick=()=>bs.forEach(x=>x.classList.toggle('on',x===b)))});
+  document.getElementById('agF').onsubmit=e=>{e.preventDefault();const g=k=>document.querySelector('.chs[data-k="'+k+'"] .on').textContent,n=document.getElementById('aN').value.trim();open(wa('Oi, Espiral!'+(n?' Sou '+n+'.':'')+' Quero agendar:\n• Serviço: '+g('s')+'\n• Meu cabelo: '+g('t')+'\n• Melhor período: '+g('p')),'_blank','noopener')}})();
+
+// FAQ
+(function(){const it=[...document.querySelectorAll('.qa')];it.forEach(q=>q.querySelector('button').onclick=()=>{const o=!q.classList.contains('on');it.forEach(x=>{x.classList.remove('on');x.querySelector('button').setAttribute('aria-expanded','false')});if(o){q.classList.add('on');q.querySelector('button').setAttribute('aria-expanded','true')}})})();
+
+// magnético
+if(fine&&!reduce)document.querySelectorAll('.btn').forEach(b=>{b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.setProperty('--x',(e.clientX-r.left-r.width/2)*.12+'px');b.style.setProperty('--y',(e.clientY-r.top-r.height/2)*.22+'px')});b.addEventListener('pointerleave',()=>{b.style.setProperty('--x','0px');b.style.setProperty('--y','0px')})});
+
+// assistente virtual
+(function(){const norm=t=>t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,' ');
+  const lev=(a,b)=>{const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j}return m[a.length][b.length]};
+  const KB=[
+   {q:'Como agendar?',k:['agendar','agenda','marcar','horario livre','vaga','encaixe'],a:'É só usar o <a href="#agendar">agendamento do site</a> ou chamar no <b>WhatsApp</b>. A gente confirma o horário com você.',w:'Oi, Espiral! Quero agendar um horário.'},
+   {q:'Preços',k:['preco','valor','quanto','custa','pagamento','pix','cartao','parcela'],a:'Alguns valores: <b>corte a partir de R$ 120</b>, <b>hidratação a partir de R$ 90</b>, <b>definição a partir de R$ 80</b> e <b>cronograma mensal R$ 280</b>. Aceitamos Pix e cartão.',w:'Oi, Espiral! Quero saber os valores.'},
+   {q:'Corte a seco',k:['corte','cortar','seco','pontas','big chop','bigchop','franja','camadas'],a:'O <b>corte a seco</b> é feito com o cabelo solto, na forma natural de cada cacho. Venha com o cabelo lavado e finalizado como você usa no dia a dia.',w:'Oi, Espiral! Quero agendar um corte a seco.'},
+   {q:'Transição capilar',k:['transicao','alisado','progressiva','quimica','duas texturas','alisamento','relaxamento'],a:'A gente acompanha toda a <b>transição capilar</b>, com cortes estratégicos e finalizações que unem as duas texturas. <a href="#transicao">Ver as fases →</a>',w:'Oi, Espiral! Estou em transição capilar e quero ajuda.'},
+   {q:'Frizz',k:['frizz','arrepiado','ressecado','seco','opaco','sem brilho','aspero','palha'],a:'Frizz e ressecamento costumam pedir <b>hidratação</b> e, às vezes, <b>nutrição</b>. Faça o <a href="#teste">teste rápido</a> para ver o que seu fio precisa.',w:'Oi, Espiral! Meu cabelo está com muito frizz/ressecado.'},
+   {q:'Cronograma',k:['cronograma','hidratacao','nutricao','reconstrucao','umectacao','tratamento'],a:'O <b>cronograma capilar</b> alterna hidratação, nutrição e reconstrução na ordem certa para o seu fio. O pacote mensal é <b>R$ 280</b>. <a href="#cronograma">Ver exemplo →</a>',w:'Oi, Espiral! Quero fazer o cronograma capilar.'},
+   {q:'Definição',k:['definir','definicao','finalizacao','finalizar','fitagem','dedoliss','difusor','gel','cacho nao define','desmancha'],a:'Na <b>definição</b> usamos fitagem, dedoliss e difusor, conforme a sua curvatura. E ensinamos você a repetir em casa!',w:'Oi, Espiral! Quero agendar uma definição.'},
+   {q:'Meu tipo de cabelo',k:['tipo','curvatura','2a','2b','2c','3a','3b','3c','4a','4b','4c','crespo','ondulado','cacheado'],a:'Atendemos <b>todas as curvaturas</b>, do 2A ao 4C. Descubra a sua na seção <a href="#curvatura">sua curvatura</a>.'},
+   {q:'Horários',k:['horario','hora','abre','fecha','funciona','sabado','domingo'],a:'<b>Seg a sex: 9h às 19h</b> · <b>Sábado: 8h às 16h</b> · Domingo fechado.',w:'Oi, Espiral! Qual horário vocês têm livre?'},
+   {q:'Onde fica?',k:['onde','endereco','fica','local','rua','chegar','bairro'],a:'📍 <b>Av. Santo Antônio, 300, Centro</b>, Garanhuns - PE. <a href="#contato">Ver no mapa →</a>'},
+   {q:'Quanto tempo demora?',k:['demora','tempo','duracao','quantas horas'],a:'Em média de <b>1h30 a 3h</b>, dependendo do serviço, do comprimento e do volume.'}];
+  const SM=[{k:['oi','ola','bom dia','boa tarde','boa noite','opa','eae'],a:'Oii! 💜 Posso te ajudar com corte, definição, hidratação, transição capilar, preços e horários.'},{k:['obrigad','valeu','brigad'],a:'Imagina! Te esperamos para cuidar dos seus cachos. 💛'}];
+  const msgs=document.getElementById('msgs'),qk=document.getElementById('qk'),as=document.getElementById('as'),ab=document.getElementById('ab');
+  const add=(h,c)=>{const d=document.createElement('div');d.className='m '+c;d.innerHTML=h;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;d.querySelectorAll('a[href^="#"]').forEach(a=>a.onclick=()=>{if(innerWidth<700)toggle(false)})};
+  function score(e,n){const ws=n.split(/\s+/).filter(w=>w.length>=4);let s=0;e.k.forEach(k=>{if(n.includes(' '+k)||(k.length>=4&&n.includes(k)))s+=2;else if(k.length>=4&&!k.includes(' ')&&ws.some(w=>lev(w,k)<=1||(k.length>=6&&lev(w.slice(0,k.length),k)<=1)))s+=1});return s}
+  function reply(t){const n=' '+norm(t)+' ';const ex=KB.find(e=>e.q===t);if(ex)return ex;if(n.trim().length<16){const g=SM.find(e=>e.k.some(k=>n.includes(' '+k)));if(g)return g}let best=null,sc=0;KB.forEach(e=>{const s=score(e,n);if(s>sc){sc=s;best=e}});if(best)return best;return SM.find(e=>e.k.some(k=>n.includes(' '+k)))||null}
+  function ask(t){add(t.replace(/</g,'&lt;'),'u');const ty=document.createElement('div');ty.className='m b typing';ty.style.opacity=1;ty.innerHTML='<i></i><i></i><i></i>';msgs.appendChild(ty);msgs.scrollTop=msgs.scrollHeight;
+    setTimeout(()=>{ty.remove();const r=reply(t);if(r)add(r.a+(r.w?'<br><a href="'+wa(r.w)+'" target="_blank" rel="noopener">Continuar no WhatsApp →</a>':''),'b');
+      else add('Essa a nossa equipe responde melhor! <a href="'+wa('Oi, Espiral! Vim pelo site e tenho uma dúvida: '+t)+'" target="_blank" rel="noopener">Enviar no WhatsApp →</a>','b')},700)}
+  KB.slice(0,8).forEach(e=>{const b=document.createElement('button');b.type='button';b.textContent=e.q;b.onclick=()=>ask(e.q);qk.appendChild(b)});
+  let hi=false;function toggle(o){as.hidden=!o;ab.setAttribute('aria-expanded',o);if(o&&!hi){hi=true;add('Oii! Sou a assistente do <b>Espiral · Studio de Cachos e Crespos</b>. 💜 Me conta: o que seu cabelo está precisando?','b')}if(o&&fine)document.getElementById('asI').focus()}
+  ab.onclick=()=>toggle(as.hidden);document.getElementById('asX').onclick=()=>toggle(false);addEventListener('keydown',e=>{if(e.key==='Escape')toggle(false)});
+  document.getElementById('asF').onsubmit=e=>{e.preventDefault();const i=document.getElementById('asI');if(i.value.trim()){ask(i.value.trim());i.value=''}}})();
+</script>
+</body>
+</html>
